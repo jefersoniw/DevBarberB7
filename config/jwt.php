@@ -101,7 +101,7 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60),
+    'ttl' => env('JWT_TTL', 60), //configura o tempo desse jwt_ttl la no .env
 
     /*
     |--------------------------------------------------------------------------
