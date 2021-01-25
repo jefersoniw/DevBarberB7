@@ -24,12 +24,16 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
+
+
         if(!$validator->fails()){
+            
             $name = $request->input('name');
             $email = $request->input('email');
             $password = $request->input('password');
 
             $emailExists = User::where('email', $email)->count();
+
             if($emailExists === 0){
                 $hash = password_hash($password, PASSWORD_DEFAULT);
                 
@@ -39,6 +43,7 @@ class AuthController extends Controller
                 $newUser->password = $hash;
                 $newUser->save();
 
+                 // autentica e depois faz o login automatico
                  $token = auth()->attempt([
                      'email' => $email,
                      'password' => $password
@@ -50,6 +55,7 @@ class AuthController extends Controller
                  }
 
                  $info = auth()->user();
+                 $info['avatar'] = url('media/avatars/'.$info['avatar']);
                  $array['data'] = $info;
                  $array['token'] = $token;
 
@@ -57,6 +63,7 @@ class AuthController extends Controller
                 $array['error'] = 'Email já cadastrado!!!!';
                 return $array;
             }
+
         }else{
             $array['error'] = 'Dados incorretos!!!';
             return $array;
