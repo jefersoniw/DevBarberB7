@@ -12,6 +12,7 @@ Route::get('/ping', function(){
 });
 
 
+Route::get('/401', [AuthController::class, 'unauthorized'])->name('login');
 
 Route::post('/auth/login', [AuthController::class, 'login']); //FEITO
 Route::post('/auth/logout', [AuthController::class, 'logout']); //FEITO
