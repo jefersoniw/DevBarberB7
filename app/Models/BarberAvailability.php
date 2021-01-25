@@ -11,6 +11,6 @@ class BarberAvailability extends Model
 
     protected $table = 'barberavailability';
 
-    public $timestamps = 'false';
+    public $timestamps = false;
 }
 

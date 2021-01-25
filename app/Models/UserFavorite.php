@@ -11,5 +11,5 @@ class UserFavorite extends Model
 
     protected $table = 'userfavorites';
 
-    public $timestamps = 'false';
+    public $timestamps = false;
 }

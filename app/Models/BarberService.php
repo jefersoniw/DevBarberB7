@@ -11,5 +11,5 @@ class BarberService extends Model
 
     protected $table = 'barberservices';
 
-    public $timestamps = 'false';
+    public $timestamps = false;
 }

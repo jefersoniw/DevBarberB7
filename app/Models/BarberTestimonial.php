@@ -11,5 +11,5 @@ class BarberTestimonial extends Model
 
     protected $table = 'barbertestimonials';
 
-    public $timestamps = 'false';
+    public $timestamps = false;
 }

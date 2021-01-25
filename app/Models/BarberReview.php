@@ -11,6 +11,6 @@ class BarberReview extends Model
 
     protected $table = 'barberreviews';
 
-    public $timestamps = 'false';
+    public $timestamps = false;
 }
 
