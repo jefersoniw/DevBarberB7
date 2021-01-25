@@ -14,8 +14,8 @@ Route::get('/ping', function(){
 
 
 Route::post('/auth/login', [AuthController::class, 'login']); //FEITO
-Route::post('/auth/logout', [AuthController::class, 'logout']);
-Route::post('/auth/refresh', [AuthController::class, 'refresh']);
+Route::post('/auth/logout', [AuthController::class, 'logout']); //FEITO
+Route::post('/auth/refresh', [AuthController::class, 'refresh']); //FEITO
 Route::post('/user', [AuthController::class, 'create']); //FEITO
 
 Route::get('/user', [UserController::class, 'read']);
