@@ -21,3 +21,5 @@
 - barbertestimonials
 - barberavailability 
 
+-- criando os controllers
+-- criando os models 
