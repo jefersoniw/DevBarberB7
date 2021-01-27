@@ -75,6 +75,10 @@ class BarberController extends Controller
         $lat = $request->input('lat');
         $ln = $request->input('lng');
         $city = $request->input('city');
+        $offset = $request->input('offset');
+        if(!$offset){
+            $offset = 0;
+        }
 
 
         if(!empty($city)){
@@ -102,8 +106,10 @@ class BarberController extends Controller
         $barbers = Barber::select(Barber::raw('*, SQRT(
             POW(69.1 * (latitude - '.$lat.'), 2) +
             POW(69.1 * ('.$lng.' - longitude) * COS(latitude / 57.3), 2)) AS distance'))
-            ->havingRaw('distance < ?', [4000])
+            //->havingRaw('distance < ?', [4000])
             ->orderBy('distance', 'ASC')
+            ->offset($offset)
+            ->limit(2)
             ->get();
 
         foreach($barbers as $bkey => $bvalue){
