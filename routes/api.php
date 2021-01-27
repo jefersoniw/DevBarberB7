@@ -20,14 +20,14 @@ Route::post('/auth/refresh', [AuthController::class, 'refresh']); //FEITO
 Route::post('/user', [AuthController::class, 'create']); //FEITO
 
 Route::get('/user', [UserController::class, 'read']); // FEITO 
-Route::put('/user', [UserController::class, 'update']);
+Route::put('/user', [UserController::class, 'update']); 
 Route::get('/user/favorites', [UserController::class, 'getFavorites']);
 Route::post('/user/favorite', [UserController::class, 'addFavorite']);
 Route::get('/user/appointments', [UserController::class, 'getAppointments']);
 
 Route::post('/barber', [BarberController::class, 'create']); // FEITO
 
-Route::get('/barbers', [BarberController::class, 'list']);
+Route::get('/barbers', [BarberController::class, 'list']); //FAZENDO
 Route::get('/barber/{id}', [BarberController::class, 'one']);
 Route::post('/barber/{id}/appointments', [BarberController::class, 'setAppointment']);
 
