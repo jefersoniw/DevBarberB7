@@ -32,3 +32,6 @@ Route::get('/barber/{id}', [BarberController::class, 'one']);
 Route::post('/barber/{id}/appointments', [BarberController::class, 'setAppointment']);
 
 Route::get('/search', [BarberController::class, 'search']);
+
+//criando barbeiros aleatorios
+// Route::get('/random', [BarberController::class, 'createRandom']);
