@@ -131,6 +131,53 @@ class BarberController extends Controller
         return $array;
     }
 
+    public function one($id){
+        $array = ['eror' => ''];
+
+        $barber = Barber::find($id);
+
+        if($barber){
+
+            $barber['avatar'] = url('media/avatars/'.$barber['avatar']);
+            $barber['favorited'] = false;
+            $barber['photos'] = [];
+            $barber['services'] = [];
+            $barber['testimonials'] = [];
+            $barber['available'] = [];
+
+            //pegando as fotos do barbeiro
+            $barber['photos'] = BarberPhoto::select(['id', 'url'])
+                ->where('id_barber', $barber->id)
+                ->get();
+
+            foreach($barber['photos'] as $bpkey => $bpvalue){
+                $barber['photos'][$bpkey]['url'] = url('media/uploads/'.$barber['photos'][$bpkey]['url']);
+            }
+
+            //pegando os serviços do barbeiro
+            $barber['services'] = BarberService::select(['id', 'name', 'price'])
+                ->where('id_barber', $barber->id)
+                ->get();
+
+            //pegando os depoimentos sobre o barbeiro
+            $barber['testimonials'] = BarberTestimonial::select(['id', 'name', 'rate', 'body'])
+                ->where('id_barber', $barber->id)
+                ->get();
+
+            //pegando as disponibilidade do barbeiro
+            $barber['available'] = BarberAvailability::where('id_barber', $barber->id)->get();
+
+            
+            $array['data'] = $barber;
+
+        }else{
+            $array['error'] = 'Barbeiro não existe';
+            return $array;
+        }
+
+        return $array;
+    }
+
 
     //implementando barbeiros aleatorios
     // public function createRandom(){
