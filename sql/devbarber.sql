@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 28-Jan-2021 às 20:47
+-- Tempo de geração: 01-Fev-2021 às 18:22
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.4.7
 
@@ -415,7 +415,8 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2021_01_21_181005_create_all_tables', 1);
+(1, '2021_01_21_181005_create_all_tables', 1),
+(2, '2021_02_01_171623_alter_appointment_table', 2);
 
 -- --------------------------------------------------------
 
@@ -427,6 +428,7 @@ CREATE TABLE `userappointments` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_barber` int(11) NOT NULL,
+  `id_service` int(11) NOT NULL,
   `ap_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -572,7 +574,7 @@ ALTER TABLE `barbertestimonials`
 -- AUTO_INCREMENT de tabela `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `userappointments`
