@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserAppointment;
+use App\Models\UserFavorite;
 use App\Models\Barber;
 use App\Models\BarberPhoto;
 use App\Models\BarberService;
@@ -145,6 +147,15 @@ class BarberController extends Controller
             $barber['testimonials'] = [];
             $barber['available'] = [];
 
+            //verificando favorito
+            $cFavorite = UserFavorite::where('id_user', $this->loggerUser->id)
+            ->where('id_barber', $barber->id)
+            ->count();
+
+            if($cFavorite > 0){
+                $barber['favorited'] = true;
+            }
+
             //pegando as fotos do barbeiro
             $barber['photos'] = BarberPhoto::select(['id', 'url'])
                 ->where('id_barber', $barber->id)
@@ -165,9 +176,59 @@ class BarberController extends Controller
                 ->get();
 
             //pegando as disponibilidade do barbeiro
-            $barber['available'] = BarberAvailability::where('id_barber', $barber->id)->get();
+            $availability = [];
+
+            // 1- pegando a disponibilidade crua
+            $avails = BarberAvailability::where('id_barber', $barber->id)->get();
+            $availWeekdays = [];
+            foreach($avails as $item){
+                $availWeekdays[$item['weekday']] = explode(',', $item['hours']);
+            }
+
+            // 2 - pegar o agendamento dos proximos 20 dias
+            $appQuery = UserAppointment::where('id_barber', $barber->id)
+            ->whereBetween('ap_datetime',[
+                date('y-m-d').'00:00:00',
+                date('y-m-d', strtotime('+20 days')).'23:59:59'
+            ])
+            ->get();
+            $appointments = [];
+            foreach($appQuery as $appItem){
+                $appointments[] = $appItem['ap_datetime'];   
+            }
+
+            // 3 - Gerar disponibilidade real
+            for($q=0; $q<20; $q++){
+                $timeItem = strtotime('+'.$q.' days');
+                $weekday = date('w', $timeItem);
+                 
+                if(in_array($weekday, array_keys($availWeekdays))){
+                    $hours = [];
+
+                    $dayItem = date('Y-m-d', $timeItem);
+
+                    foreach($availWeekdays[$weekday] as $hourItem) {
+                        $dayFormated = $dayItem.' '.$hourItem.':00';
+                        if(!in_array($dayFormated, $appointments)){
+                            $hours[] = $hourItem;
+                        }
+                    }
+
+                    if(count($hours) > 0){
+                        $availability[] = [
+                            'date' => $dayItem,
+                            'hours' => $hours
+                        ];
+                    }
+
+                }
+
+            }
 
             
+            $barber['available'] = $availability;
+
+
             $array['data'] = $barber;
 
         }else{
