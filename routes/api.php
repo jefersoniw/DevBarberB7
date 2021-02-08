@@ -22,14 +22,14 @@ Route::post('/user', [AuthController::class, 'create']); //FEITO
 Route::get('/user', [UserController::class, 'read']); // FEITO 
 Route::put('/user', [UserController::class, 'update']); 
 Route::get('/user/favorites', [UserController::class, 'getFavorites']);
-Route::post('/user/favorite', [UserController::class, 'addFavorite']);
+Route::post('/user/favorite', [UserController::class, 'addFavorite']); // FAZENDO
 Route::get('/user/appointments', [UserController::class, 'getAppointments']);
 
 Route::post('/barber', [BarberController::class, 'create']); // FEITO
 
 Route::get('/barbers', [BarberController::class, 'list']); //FEITO
 Route::get('/barber/{id}', [BarberController::class, 'one']); // FEITO
-Route::post('/barber/{id}/appointments', [BarberController::class, 'setAppointment']); //FAZENDO
+Route::post('/barber/{id}/appointments', [BarberController::class, 'setAppointment']); //FEITO
 
 Route::get('/search', [BarberController::class, 'search']);
 
