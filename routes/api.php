@@ -22,7 +22,7 @@ Route::post('/user', [AuthController::class, 'create']); //FEITO
 Route::get('/user', [UserController::class, 'read']); // FEITO 
 Route::put('/user', [UserController::class, 'update']); 
 Route::get('/user/favorites', [UserController::class, 'getFavorites']);
-Route::post('/user/favorite', [UserController::class, 'addFavorite']); // FAZENDO
+Route::post('/user/favorite', [UserController::class, 'toogleFavorite']); // FEITO
 Route::get('/user/appointments', [UserController::class, 'getAppointments']);
 
 Route::post('/barber', [BarberController::class, 'create']); // FEITO
