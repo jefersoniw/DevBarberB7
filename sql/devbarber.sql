@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01-Fev-2021 às 18:22
+-- Tempo de geração: 08-Fev-2021 às 19:54
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.4.7
 
@@ -432,6 +432,14 @@ CREATE TABLE `userappointments` (
   `ap_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Extraindo dados da tabela `userappointments`
+--
+
+INSERT INTO `userappointments` (`id`, `id_user`, `id_barber`, `id_service`, `ap_datetime`) VALUES
+(1, 3, 26, 64, '2020-09-09 12:00:00'),
+(2, 3, 26, 64, '2020-09-09 09:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -443,6 +451,13 @@ CREATE TABLE `userfavorites` (
   `id_user` int(11) NOT NULL,
   `id_barber` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `userfavorites`
+--
+
+INSERT INTO `userfavorites` (`id`, `id_user`, `id_barber`) VALUES
+(4, 3, 26);
 
 -- --------------------------------------------------------
 
@@ -580,13 +595,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de tabela `userappointments`
 --
 ALTER TABLE `userappointments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `userfavorites`
 --
 ALTER TABLE `userfavorites`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `users`
