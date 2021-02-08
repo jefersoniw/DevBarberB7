@@ -28,8 +28,8 @@ Route::get('/user/appointments', [UserController::class, 'getAppointments']);
 Route::post('/barber', [BarberController::class, 'create']); // FEITO
 
 Route::get('/barbers', [BarberController::class, 'list']); //FEITO
-Route::get('/barber/{id}', [BarberController::class, 'one']); // FAZENDO
-Route::post('/barber/{id}/appointments', [BarberController::class, 'setAppointment']);
+Route::get('/barber/{id}', [BarberController::class, 'one']); // FEITO
+Route::post('/barber/{id}/appointments', [BarberController::class, 'setAppointment']); //FAZENDO
 
 Route::get('/search', [BarberController::class, 'search']);
 

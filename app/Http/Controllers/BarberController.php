@@ -240,6 +240,65 @@ class BarberController extends Controller
     }
 
 
+    public function setAppointment($id, Request $request){
+        //service, year, month, day, hour
+        $array = ['error' => ''];
+
+        $service = $request->input('service');
+        $year = intval($request->input('year'));
+        $month = intval($request->input('month'));
+        $day = intval($request->input('day'));
+        $hour = intval($request->input('hour'));
+
+        $month = ($month < 10) ? '0'.$month : $month;
+        $day = ($day < 10) ? '0'.$day : $day;
+        $hour = ($hour < 10) ? '0'.$hour : $hour;
+
+        //1- verificar se o serviço do barbeiro existe
+        $barberservice = BarberService::select()->where('id', $service)->where('id_barber', $id)->first();
+        
+        if($barberservice){
+            //2- verificar se a data é real
+            $apDate = $year.'-'.$month.'-'.$day.' '.$hour.':00:00';
+            if(strtotime($apDate) > 0){
+                //3- verificar se o barbeiro possui agendamento neste dia/hora
+                $apps = UserAppointment::select()->where('id_barber', $id)->where('ap_datetime', $apDate)->count();
+                if($apps === 0){
+                    //4.1- verificar disponibilidade nesta data
+                    $weekday = date('w', strtotime($apDate));
+                    $avail = BarberAvailability::select()->where('id_barber', $id)->where('weekday', $weekday)->first();
+                    if($avail){
+                        //4.2 - verificar disponibilidade nesta hora
+                        $hours = explode(',', $avail['hours']);
+                        if(in_array($hour.':00', $hours)){
+                            //5- fazer agendamento
+                            $agendamento = new UserAppointment;
+                            $agendamento->id_user = $this->loggerUser->id;
+                            $agendamento->id_barber = $id;
+                            $agendamento->id_service = $service;
+                            $agendamento->ap_datetime = $apDate;
+                            $agendamento->save();
+                        }else{
+                            $array['error'] = 'Barbeiro não atende nesta hora';
+                        }
+                    }else{
+                        $array['error'] = 'Barbeiro não atende neste dia';
+                    }
+                }else{
+                    $array['error'] = 'O barbeiro já possui um agendamento neste dia/hora';
+                }
+            }else{
+                $array['error'] = 'Data inválida';
+            }
+        }else{
+            $array['error'] = 'Serviço inexistente';
+        }    
+
+        
+        return $array;
+    }
+
+
     //implementando barbeiros aleatorios
     // public function createRandom(){
     //     $array = ['error' => ''];
