@@ -20,7 +20,7 @@ Route::post('/auth/refresh', [AuthController::class, 'refresh']); //FEITO
 Route::post('/user', [AuthController::class, 'create']); //FEITO
 
 Route::get('/user', [UserController::class, 'read']); // FEITO 
-Route::put('/user', [UserController::class, 'update']); 
+Route::put('/user', [UserController::class, 'update']); // FAZENDO
 Route::get('/user/favorites', [UserController::class, 'getFavorites']); // FEITO
 Route::post('/user/favorite', [UserController::class, 'toogleFavorite']); // FEITO
 Route::get('/user/appointments', [UserController::class, 'getAppointments']); //FEITO

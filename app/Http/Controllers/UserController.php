@@ -10,6 +10,8 @@ use App\Models\UserFavorite;
 use App\Models\UserAppointment;
 use App\Models\Barber;
 use App\Models\BarberService;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -119,6 +121,47 @@ class UserController extends Controller
             }
 
         }
+
+        return $array;
+    }
+
+    public function update(Request $request){
+        $array = ['error' => ''];
+
+        $rules = [
+            'name' => 'min:2',
+            'email' => 'email|unique:users',
+            'password' => 'same:password_confirm',
+            'password_confirm' => 'same:password'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()){
+            $array['error'] = $validator->messages();
+            return $array;
+        }
+
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $password_confirm = $request->input('password_confirm');
+
+        $user = User::find($this->loggedUser->id);
+        
+        if($name){
+            $user->name = $name;
+        }
+        
+        if($email){
+            $user->email = $email;
+        }
+        
+        if($password){
+            $user->password = password_hash($password, PASSWORD_DEFAULT);
+        }
+        
+        $user->save();
 
         return $array;
     }
